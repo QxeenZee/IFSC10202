@@ -12,3 +12,8 @@ second_seconds = int(input("Enter Seconds: "))
 first_total_seconds = (first_hours * 3600) + (first_minutes * 60) + first_seconds
 second_total_seconds = (second_hours * 3600) + (second_minutes * 60) + second_seconds
 
+#Calculate the difference in seconds
+difference_in_seconds = second_total_seconds - first_total_seconds
+
+#Print the results
+print(difference_in_seconds)
