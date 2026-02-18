@@ -21,7 +21,7 @@ def is_special_number(n):
 
 
 def find_special_numbers(start, end):
-    """Finds and prints special numbers within a given range."""
+    #Finds and prints special numbers within a given range.
     print(f"Special Numbers between {start} and {end}")
     for number in range(start, end + 1):
         if is_special_number(number):
