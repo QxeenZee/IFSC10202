@@ -1,55 +1,50 @@
+def ParseDegreeString(ddmmss):
+    # Find symbol positions
+    deg_pos = ddmmss.find(chr(176))   # degree symbol °
+    min_pos = ddmmss.find("'")        # minute symbol '
+    sec_pos = ddmmss.find('"')        # second symbol "
+
+    # Extract values
+    degrees = ddmmss[0:deg_pos]
+    minutes = ddmmss[deg_pos + 1:min_pos]
+    seconds = ddmmss[min_pos + 1:sec_pos]
+
+    # Convert to float
+    degrees = float(degrees)
+    minutes = float(minutes)
+    seconds = float(seconds)
+
+    return degrees, minutes, seconds
+
+
+def DDMMSStoDecimal(degrees, minutes, seconds):
+    decimal_degrees = degrees + (minutes / 60) + (seconds / 3600)
+    return decimal_degrees
+
+
 def main():
 
-    # Open the file and read all lines into a list
-    file = open("constitution.txt", "r")
+    input_file = open("07.Project Angles Input.txt", "r")
+    output_file = open("07.Project Angles Output.txt", "w")
 
-    lines = []
-    for line in file:
-        line = line.rstrip("\n")   # remove newline character
-        lines.append(line)
+    count = 0
 
-    file.close()
+    for line in input_file:
+        line = line.strip()
 
-    # Keep asking for search terms
-    while True:
+        if line != "":
+            degrees, minutes, seconds = ParseDegreeString(line)
 
-        search = input("Enter search term: ")
+            decimal_value = DDMMSStoDecimal(degrees, minutes, seconds)
 
-        # Exit if user presses Enter
-        if search == "":
-            break
+            output_file.write(str(decimal_value) + "\n")
 
-        i = 0
+            count = count + 1
 
-        while i < len(lines):
+    input_file.close()
+    output_file.close()
 
-            # Check if search term appears in the line (case insensitive)
-            if search.lower() in lines[i].lower():
-
-                # Find start of section (look backward for blank line)
-                start = i
-                while start > 0 and lines[start] != "":
-                    start = start - 1
-
-                # Find end of section (look forward for blank line)
-                end = i
-                while end < len(lines) - 1 and lines[end] != "":
-                    end = end + 1
-
-                # Print the section with line numbers
-                j = start
-                while j <= end:
-                    print("Line", j + 1, ":", lines[j])
-                    j = j + 1
-
-                print()
-
-                # Skip to the end of the section
-                i = end + 1
-
-            else:
-                i = i + 1
+    print(count, "records processed")
 
 
-# Run the program
 main()
